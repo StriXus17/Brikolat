@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+
+{% block body %} 
+  <!-- Contact HTML Goes Here -->
+	<div dir="rtl" id="new-account" align="center">
+		<h2 id="second-headline"  class="animate__animated animate__zoomIn">أنشئ حساب جديد</h2>
+		<form id="register-form" class="animate__animated animate__fadeInUp" method="post" action="/new"> 
+		<div class="container">
+		<div class="row mb-3">
+		<div class="col">
+        <label for="name" class="form-label">الاسم</label>
+        <input type="text" class="form-control" name="name">
+      </div>
+	  
+      <div class="col">
+        <label for="familyName" class="form-label">اللقب</label>
+        <input type="text" class="form-control" name="familyName">
+      </div>
+	  </div>
+      <div class="mb-3">
+        <label for="phoneNumber" class="form-label">رقم الهاتف</label>
+        <input type="tel" class="form-control" name="phoneNumber">
+      </div>
+      <div class="mb-3">
+        <label for="jobType" class="form-label">نوع الوظيفة</label>
+        <input type="text" class="form-control" name="jobType">
+      </div>
+      <div class="mb-3">
+        <label for="town" class="form-label">البلدية</label>
+        <input type="text" class="form-control" name="town">
+      </div>
+      <div class="mb-3">
+        <label for="state" class="form-label">الولاية</label>
+        <input type="text" class="form-control" name="state">
+      </div>
+	  <div class="mb-3" align="center">
+      <button type="submit" id="new-account-button" class="btn">إرسال</button>
+	  </div>
+		</form>
+	</div>
+{% endblock %}

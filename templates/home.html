@@ -1,8 +1,112 @@
 {% extends 'layout.html' %}
 
 {% block body %} 
-  <!-- Home HTML Goes Here -->
-  <h1>Home</h1>
-  <p>Welcome Home!</p>
+<body>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <main dir="rtl">
+    <section id="section-1">
+	<div align="center"><h1 id="main-headline" class="animate__animated animate__zoomIn">محتاج بريكولة ؟</h1></div>
+	<br><br><br>
+	<div class="container" align="center">
+	<div class="row">
+	<div class="col-sm form-group animate__animated animate__zoomIn">
+    <select class="form-control" id="job">
+	<option value="" disabled selected>إختر نوع العمل</option>
+	<option>سباك</option>
+	<option>ميكانيكي</option>
+	<option>بناء</option>
+	<option>حرفي</option>
+	</select>
+    </div>
+	
+	<div class="col-sm form-group animate__animated animate__zoomIn">
+    <select class="form-control" id="wilaya">
+	<option value="" disabled selected>إختر الولاية</option>
+	<option value="بومرداس">بومرداس</option>
+	<option value="الجزائر">الجزائر</option>
+	<option value="تيزي وزو">تيزي وزو</option>
+	<option value="بليدة">بليدة</option>
+	</select>
+    </div>
+	
+	<div class="col-sm form-group animate__animated animate__zoomIn">
+    <select class="form-control" id="baladia">
+	<option value="" disabled selected>إختر البلدية</option>
+	<option value="برج منايل">برج منايل</option>
+	<option value="بومرداس">بومرداس</option>
+	<option value="يسر">يسر</option>
+	<option value="ثنية">ثنية</option>
+	</select>
+    </div>
+	
+	<div class="col-sm animate__animated animate__zoomIn">
+	<button type="button" onclick="search()" id="search" class="btn btn-primary">بحث</button>
+	</div>
+	
+	</div>
+	</div>
+    </section>
+
+    <section id="section-2" hidden><br>
+	<div align="center"><h1 id="second-headline" class="animate__animated animate__zoomIn">نتائج البحث</h1></div>
+	<div class="container">
+	<div align="center"><h2{%if l>0%} hidden {%endif%}id="nodata">لا يوجد بيانات</h2></div>
+	{%for i in range(0,l)%}
+      <div class="row justify-content-center" id="{{i}}">
+        <div class="col card animate__animated animate__zoomIn">
+            <div><img class="card-img-top" src="/static/img/kars.png" alt="Profile Image"><h2 class="card-title" id="profile-name">{{data[i]["name"]}}</h5></div>
+            <div class="card-body">
+				<h4 class="card-text"><b>{{data[i]["job"]}}</b></h4>
+				<h5 class="card-text">{{data[i]["baladia"]}} - {{data[i]["wilaya"]}}</h5>
+                <h5 class="card-text">رقم الهاتف: {{data[i]["tel"]}}</h5>
+                <div class="rating">
+				{%for i in range(0,data[i]['rate'])%}
+                    <span class="fa fa-star checked"></span>
+				{%endfor%}
+				{%for i in range(data[i]['rate'],5)%}
+                    <span class="fa fa-star"></span>
+				{%endfor%}
+                </div>
+                <div class="gallery">
+                    <img class="gallery-item" src="/static/img/jotaro.jpg" alt="Work Image 1">
+                    <img class="gallery-item" src="/static/img/duck.png" alt="Work Image 2">
+                </div><br>
+				<div align="center">
+                <a class="btn btn-primary" href="https://maps.google.com" target="_blank" {%if data[i]["location"] == None %} hidden {%endif%} >
+                    <i class="fa fa-map-marker" aria-hidden="true"></i> View on Google Maps
+                </a></div>
+            </div>
+		</div>
+	   </div>
+	{%endfor%}
+	</div>
+
+    </section>
+  </main>
+</body>
+<script>
+let data = {{data | safe}};
+let baladia = document.getElementById('baladia').value;
+let wilaya = document.getElementById('wilaya').value;
+let job = document.getElementById('job').value;
+var j=0;
+function search() {
+  var targetElement = document.getElementById('section-2');
+  baladia = document.getElementById('baladia').value;
+  wilaya = document.getElementById('wilaya').value;
+  job = document.getElementById('job').value;
+  for(x in data){
+	if((data[x]["job"] + data[x]["wilaya"] + data[x]["baladia"]) != (job+wilaya+baladia)){
+	document.getElementById(x.toString()).hidden = true;
+	j=j+1;
+	}else{
+	document.getElementById(x.toString()).hidden = false;
+	}
+  }
+  if(j=={{l}}){document.getElementById('nodata').hidden = false;}else{document.getElementById('nodata').hidden = true;}
+  document.getElementById('section-2').hidden = false;
+  targetElement.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
 {% endblock %}
 
