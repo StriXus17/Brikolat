@@ -37,4 +37,4 @@ def new():
 #    return render_template("fileName.html")
 
 if __name__ == "__main__":
-    app.run(debug=True,host='13.50.232.106', port=4000)
+    app.run(debug=False,host='0.0.0.0', port=80)
