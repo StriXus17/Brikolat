@@ -7,7 +7,15 @@ app = Flask(__name__)
 def index():
     with open('./db/data.json') as f:
         data = json.load(f)
-    return render_template("home.html",data=data,l=len(data))
+    baladias = []
+    wilayas = []
+    jobs = []
+    for x in data:
+        baladias.append(x["baladia"])
+        wilayas.append(x["wilaya"])
+        jobs.append(x["job"])
+    f.close()
+    return render_template("home.html",data=data,l=len(data),baladias = set(baladias),wilayas = set(wilayas), jobs=set(jobs))
 
 @app.route("/new",methods=["GET","POST"])
 def new():
@@ -21,7 +29,7 @@ def new():
             "wilaya":request.form["state"],
             "rate":0,
             "tel":request.form["phoneNumber"],
-            "location":None}
+            "location":0}
             data.append(d)
             f.close()
         with open('./db/data.json',"w") as f:
@@ -37,4 +45,4 @@ def new():
 #    return render_template("fileName.html")
 
 if __name__ == "__main__":
-    app.run(debug=False,host='0.0.0.0', port=80)
+    app.run(debug=False,host='0.0.0.0', port=4000)
