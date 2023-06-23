@@ -12,30 +12,27 @@
 	<div class="col-sm form-group animate__animated animate__zoomIn">
     <select class="form-control" id="job">
 	<option value="" disabled selected>إختر نوع العمل</option>
-	<option>سباك</option>
-	<option>ميكانيكي</option>
-	<option>بناء</option>
-	<option>حرفي</option>
+	{%for x in jobs %}
+	<option value={{x}}>{{x}}</option>
+	{% endfor %}
 	</select>
     </div>
 	
 	<div class="col-sm form-group animate__animated animate__zoomIn">
     <select class="form-control" id="wilaya">
 	<option value="" disabled selected>إختر الولاية</option>
-	<option value="بومرداس">بومرداس</option>
-	<option value="الجزائر">الجزائر</option>
-	<option value="تيزي وزو">تيزي وزو</option>
-	<option value="بليدة">بليدة</option>
+	{%for x in wilayas %}
+	<option value={{x}}>{{x}}</option>
+	{% endfor %}
 	</select>
     </div>
 	
 	<div class="col-sm form-group animate__animated animate__zoomIn">
     <select class="form-control" id="baladia">
 	<option value="" disabled selected>إختر البلدية</option>
-	<option value="برج منايل">برج منايل</option>
-	<option value="بومرداس">بومرداس</option>
-	<option value="يسر">يسر</option>
-	<option value="ثنية">ثنية</option>
+	{%for x in baladias %}
+	<option value={{x}}>{{x}}</option>
+	{% endfor %}
 	</select>
     </div>
 	
@@ -85,10 +82,10 @@
   </main>
 </body>
 <script>
-let data = {{data | safe}};
-let baladia = document.getElementById('baladia').value;
-let wilaya = document.getElementById('wilaya').value;
-let job = document.getElementById('job').value;
+var data = {{data | safe}};
+var baladia = document.getElementById('baladia').value;
+var wilaya = document.getElementById('wilaya').value;
+var job = document.getElementById('job').value;
 var j=0;
 function search() {
   var targetElement = document.getElementById('section-2');
@@ -96,8 +93,9 @@ function search() {
   wilaya = document.getElementById('wilaya').value;
   job = document.getElementById('job').value;
   for(x in data){
-	if((data[x]["job"] + data[x]["wilaya"] + data[x]["baladia"]) != (job+wilaya+baladia)){
+	if((data[x]["job"] + data[x]["wilaya"] + data[x]["baladia"]) !== (job+wilaya+baladia)){
 	document.getElementById(x.toString()).hidden = true;
+	console.log((data[x]["job"] + data[x]["wilaya"] + data[x]["baladia"]));
 	j=j+1;
 	}else{
 	document.getElementById(x.toString()).hidden = false;
